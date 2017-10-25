@@ -1,5 +1,3 @@
 def run_CMT(seq, result_path, save_image):
-    print seq
-    print result_path
-    print save_image
-    return {'res': [], 'type': 'rect', 'fps': 1}
+    seq_len = seq.endFrame - seq.startFrame + 1
+    return {'res': [[0, 0, 5, 5]] * seq_len, 'type': 'rect', 'fps': 1}

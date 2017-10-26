@@ -54,6 +54,4 @@ def run_SiamFC(seq, results_path, save_image):
 
 
 def _read_image(fname):
-    return ndimage.imread(fname)[:, :, ::-1]
-
-
+    return ndimage.imread(fname, mode='RGB')[:, :, ::-1]

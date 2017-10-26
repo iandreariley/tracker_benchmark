@@ -13,11 +13,11 @@ except:
 
 WORKDIR = os.path.abspath('.')
 
-SEQ_SRC = './data/'
+SEQ_SRC = '/home/ubuntu/src/tracker_benchmark/data/'
 
-TRACKER_SRC = './trackers/'
+TRACKER_SRC = '/home/ubuntu/src/tracker_benchmark/trackers/'
 
-RESULT_SRC = './results/{0}/' # '{0} : OPE, SRE, TRE'
+RESULT_SRC = '/home/ubuntu/src/tracker_benchmark/results/{0}/' # '{0} : OPE, SRE, TRE'
 
 SETUP_SEQ = True
 
@@ -36,7 +36,7 @@ ATTR_LIST_FILE = 'attr_list.txt'
 ATTR_DESC_FILE = 'attr_desc.txt'
 TB_50_FILE = 'tb_50.txt'
 TB_100_FILE = 'tb_100.txt'
-CVPR_13_FILE = 'cvpr13.txt' 
+CVPR_13_FILE = 'cvpr13.txt'
 ATTR_FILE = 'attrs.txt'
 INIT_OMIT_FILE = 'init_omit.txt'
 GT_FILE = 'groundtruth_rect.txt'

@@ -7,10 +7,10 @@ import json
 import os
 import CMT
 import util
-# import evaluation
-# from convolutional import set_convolutional
-# from region_to_bbox import region_to_bbox
-# from crops import extract_crops_x, extract_crops_z, pad_frame
+import evaluation
+from convolutional import set_convolutional
+from region_to_bbox import region_to_bbox
+from crops import extract_crops_x, extract_crops_z, pad_frame
 
 # TODO: Not a good place for these variables, move elsewhere.
 pos_x_ph = tf.placeholder(tf.float64)

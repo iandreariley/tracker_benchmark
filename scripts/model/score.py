@@ -63,10 +63,13 @@ class Score:
 ##########################################################
 
 def getScoreList():
+    curr_dir = os.getcwd()
+    os.chdir(WORKDIR)
     srcAttrFile = open(SEQ_SRC + ATTR_DESC_FILE)
     attrLines = srcAttrFile.readlines()
     attrList = []
     for line in attrLines:
         attr = Score.getScoreFromLine(line)
         attrList.append(attr)
+    os.chdir(curr_dir)
     return attrList

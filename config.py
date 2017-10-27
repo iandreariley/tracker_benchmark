@@ -23,7 +23,7 @@ SETUP_SEQ = True
 
 SAVE_RESULT = True
 
-OVERWRITE_RESULT = True
+OVERWRITE_RESULT = False
 
 SAVE_IMAGE = False
 
@@ -36,6 +36,7 @@ ATTR_LIST_FILE = 'attr_list.txt'
 ATTR_DESC_FILE = 'attr_desc.txt'
 TB_50_FILE = 'tb_50.txt'
 TB_100_FILE = 'tb_100.txt'
+TB_LAST = 'tb_other50.txt'
 CVPR_13_FILE = 'cvpr13.txt'
 ATTR_FILE = 'attrs.txt'
 INIT_OMIT_FILE = 'init_omit.txt'

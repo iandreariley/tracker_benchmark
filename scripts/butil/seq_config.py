@@ -83,6 +83,7 @@ def load_seq_configs(seqNames):
     return [load_seq_config(x) for x in seqNames]
 
 def get_seq_names(loadSeqs):
+    print loadSeqs
     if type(loadSeqs) is list:
         return loadSeqs
     if loadSeqs.lower() == 'all':
@@ -102,6 +103,10 @@ def get_seq_names(loadSeqs):
     elif loadSeqs.lower() == 'cvpr13':
         cvpr13 = open(SEQ_SRC+CVPR_13_FILE)
         seq_list = cvpr13.readlines()
+        names = sorted([x.split('\t')[0].strip() for x in seq_list])
+    elif loadSeqs.lower() == 'last50':
+        tb_last = open(SEQ_SRC+TB_LAST)
+        seq_list = tb_last.readlines()
         names = sorted([x.split('\t')[0].strip() for x in seq_list])
     else:
         names = loadSeqs

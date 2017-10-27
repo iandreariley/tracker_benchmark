@@ -6,10 +6,10 @@ from config import *
 from scripts import *
 
 def main(argv):
-    
+
     trackers = os.listdir(TRACKER_SRC)
     evalTypes = ['OPE', 'SRE', 'TRE']
-    loadSeqs = 'TB50'
+    loadSeqs = 'LAST50'
     seqs = []
     try:
         opts, args = getopt.getopt(argv, "ht:e:s:",["tracker=","evaltype="
@@ -31,7 +31,7 @@ def main(argv):
             loadSeqs = arg
             if loadSeqs != 'All' and loadSeqs != 'all' and \
                 loadSeqs != 'tb50' and loadSeqs != 'tb100' and \
-                loadSeqs != 'cvpr13':
+                loadSeqs != 'cvpr13' and loadSeqs != 'last50':
                 loadSeqs = [x.strip() for x in arg.split(',')]
         elif opt in ("-e", "--evaltype"):
             evalTypes = [x.strip() for x in arg.split(',')]
@@ -71,7 +71,7 @@ def main(argv):
                     print "\toverlap : {0:02.1f}%".format(attr.overlap),
                     print "\tfailures : {0:.1f}".format(attr.error)
 
-                if SAVE_RESULT : 
+                if SAVE_RESULT :
                     butil.save_scores(attrList, testname)
 
 def run_trackers(trackers, seqs, evalType, shiftTypeSet):
@@ -85,11 +85,12 @@ def run_trackers(trackers, seqs, evalType, shiftTypeSet):
     trackerResults = dict((t,list()) for t in trackers)
     for idxSeq in range(numSeq):
         s = seqs[idxSeq]
-        
+
         subSeqs, subAnno = butil.get_sub_seqs(s, 20.0, evalType)
 
-        for idxTrk in range(len(trackers)):         
+        for idxTrk in range(len(trackers)):
             t = trackers[idxTrk]
+            # try:
             if not os.path.exists(TRACKER_SRC + t):
                 print '{0} does not exists'.format(t)
                 sys.exit(1)
@@ -111,17 +112,17 @@ def run_trackers(trackers, seqs, evalType, shiftTypeSet):
                     os.makedirs(rp)
                 subS = subSeqs[idx]
                 subS.name = s.name + '_' + str(idx)
-                    
+
                 os.chdir(TRACKER_SRC + t)
                 funcName = 'run_{0}(subS, rp, SAVE_IMAGE)'.format(t)
-                try:
-                    res = eval(funcName)
-                except:
-                    print 'failed to execute {0} : {1}'.format(
-                        t, sys.exc_info())
-                    os.chdir(WORKDIR)         
-                    break
-                os.chdir(WORKDIR)
+                # try:
+                res = eval(funcName)
+                # except:
+                #     print 'failed to execute {0} : {1}'.format(
+                #         t, sys.exc_info())
+                #     os.chdir(WORKDIR)
+                #     break
+                # os.chdir(WORKDIR)
 
                 if evalType == 'SRE':
                     r = Result(t, s.name, subS.startFrame, subS.endFrame,
@@ -136,6 +137,13 @@ def run_trackers(trackers, seqs, evalType, shiftTypeSet):
             #end for subseqs
             if SAVE_RESULT:
                 butil.save_seq_result(seqResults)
+            # except Exception as e:
+            #     print "tracker {0} failed on sequence {1} with the following exception: {2}".format(t, s.name, e)
+            #     try:
+            #         with open('/home/ubuntu/src/tracker_benchmark/failures.txt', 'w+') as f:
+            #             f.write('{0},{1}'.format(t, s.name))
+            #     except Exception:
+            #         pass
 
             trackerResults[t].append(seqResults)
         #end for tracker

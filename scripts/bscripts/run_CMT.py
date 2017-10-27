@@ -16,7 +16,12 @@ def run_CMT(seq, result_path, save_image):
     results[0] = seq.init_rect
 
     trkr = detector.CmtDetector()
-    trkr.set_target(_read_image(seq_frames[0]), seq.init_rect)
+
+    try:
+        trkr.set_target(_read_image(seq_frames[0]), seq.init_rect)
+    except:
+        return {'res': results, 'type': 'rect', 'fps': None}
+
 
     start = time.time()
     for i, img_file in enumerate(seq_frames[1:], start=1):

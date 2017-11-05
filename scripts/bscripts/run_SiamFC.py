@@ -33,7 +33,7 @@ siamfc_detector = detector.SiameseNetwork(hp, design, env)
 def run_SiamFC(seq, results_path, save_image):
     global siamfc_detector
     seq_len = seq.endFrame - seq.startFrame + 1
-    results = [[0., 0., 0., 0.]] * seq_len
+    results = [[0., 0., 1., 1.] * seq_len
 
     # Convert from matlab indices to py indices, and slice array from start to end frames, inclusive.
     start_frame = seq.startFrame - 1

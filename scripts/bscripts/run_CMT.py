@@ -5,26 +5,21 @@ import time
 
 
 def run_CMT(seq, result_path, save_image):
-    seq_len = seq.endFrame - seq.startFrame + 1
+    seq_len = seq.len
     results = [[0., 0., 1., 1.]] * seq_len
 
     # Convert from matlab indices to py indices, and slice array from start to end frames, inclusive.
-    start_frame = seq.startFrame - 1
-    end_frame = seq.endFrame - 1
-    seq_frames = seq.s_frames[start_frame : end_frame + 1]
-
     results[0] = seq.init_rect
-
     trkr = detector.CmtDetector()
 
     try:
-        trkr.set_target(_read_image(seq_frames[0]), seq.init_rect)
+        trkr.set_target(_read_image(seq.s_frames[0]), seq.init_rect)
     except:
         return {'res': results, 'type': 'rect', 'fps': None}
 
 
     start = time.time()
-    for i, img_file in enumerate(seq_frames[1:], start=1):
+    for i, img_file in enumerate(seq.s_frames[1:], start=1):
         img = _read_image(img_file)
         results[i] = trkr.detect(img)
     ms = time.time() - start
